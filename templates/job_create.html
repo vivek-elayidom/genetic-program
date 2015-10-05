@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Gnome App :: Upload</title>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/jasny-bootstrap.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap-select.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/web-app.css">
+</head>
+<body>
+	{% csrf_token %}
+	<div class="loader">
+		<div class="flex-box">
+			<div class="flex text-center">
+				<i class="fa fa-cog fa-spin fa-3x"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="dna-bg"></div>
+
+	<div class="app">
+		<div class="upload-annotate-refine">
+			<div class="flex-box">
+				<div class="flex">
+					<div class="container">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<form action="/" method="POST" role="form" id="frm_job_create" autocomplete="off">
+										<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+
+											<legend class="text-center">Select a tool to Annotate</legend>
+
+											<div class="form-group">
+												<select name="" id="annotation_program" class="form-control selectpicker">
+													<option value="">-- Select --</option>
+													<option value="annovar">Annovar</option>
+													<option value="bioconductor">Bioconductor</option>
+													<option value="annotation2">Annotation2</option>
+													<option value="annotation3">Annotation3</option>
+												</select>
+											</div>
+
+											<legend class="text-center">Select Database</legend>
+
+											<div class="panel panel-default">
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+															<div class="checkbox">
+																<label>
+																	<input type="checkbox" name="database" id="refGene" value="refGene" data-param="g"> refGene
+																</label>
+															</div>
+														</div>
+														<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+															<div class="checkbox">
+																<label class="checkbox-inline">
+																	<input type="checkbox" name="database" id="cytoBand" value="cytoBand" data-param="r"> cytoBand
+																</label>
+															</div>
+														</div>
+														<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+															<div class="checkbox">
+																<label class="checkbox-inline">
+																	<input type="checkbox" name="database" id="genomicSuperDups" value="genomicSuperDups" data-param="r"> genomicSuperDups
+																</label>
+															</div>
+														</div>
+														<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+															<div class="checkbox">
+																<label class="checkbox-inline">
+																	<input type="checkbox" name="database" id="esp6500siv2_all" value="esp6500siv2_all" data-param="f"> esp6500siv2_all
+																</label>
+															</div>
+														</div>
+														<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+															<div class="checkbox">
+																<label class="checkbox-inline">
+																	<input type="checkbox" name="database" id="1000g2014oct_all" value="1000g2014oct_all" data-param="f"> 1000g2014oct_all
+																</label>
+															</div>
+														</div>
+														<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+															<div class="checkbox">
+																<label class="checkbox-inline">
+																	<input type="checkbox" name="database" id="1000g2014oct_afr" value="1000g2014oct_afr" data-param="f"> 1000g2014oct_afr
+																</label>
+															</div>
+														</div>
+														<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+															<div class="checkbox">
+																<label class="checkbox-inline">
+																	<input type="checkbox" name="database" id="1000g2014oct_eas" value="1000g2014oct_eas" data-param="f"> 1000g2014oct_eas
+																</label>
+															</div>
+														</div>
+														<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+															<div class="checkbox">
+																<label class="checkbox-inline">
+																	<input type="checkbox" name="database" id="1000g2014oct_eur" value="1000g2014oct_eur" data-param="f"> 1000g2014oct_eur
+																</label>
+															</div>
+														</div>
+														<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+															<div class="checkbox">
+																<label class="checkbox-inline">
+																	<input type="checkbox" name="database" id="snp138" value="snp138" data-param="f"> snp138
+																</label>
+															</div>
+														</div>
+														<!-- <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+															<div class="checkbox">
+																<label class="checkbox-inline">
+																	<input type="checkbox" id="ljb26_all" value="ljb26_all"> ljb26_all
+																</label>
+															</div>
+														</div> -->
+													</div>
+												</div>
+											</div>
+
+											<legend class="text-center">Upload VCF</legend>
+
+											<div class="form-group">
+												<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+													<div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+													<span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><input type="file" name="..." id="vcf_file"></span>
+													<a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+												</div>
+											</div>
+											<div class="form-group text-center">
+												<button type="submit" class="btn btn-primary">Submit</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<script src="{{STATIC_URL}}js/jquery-1.11.2.min.js"></script>
+	<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+	<script src="{{STATIC_URL}}js/jasny-bootstrap.min.js"></script>
+	<script src="{{STATIC_URL}}js/bootstrap-select.js"></script>
+	<script>
+		function getCookie(name) {
+			var cookieValue = null;
+			if (document.cookie && document.cookie != '') {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+					var cookie = jQuery.trim(cookies[i]);
+					// Does this cookie string begin with the name we want?
+					if (cookie.substring(0, name.length + 1) == (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		};
+		var csrftoken = getCookie('csrftoken');
+		$('#frm_job_create').submit(function (e) {
+			e.preventDefault();
+			var formData = new FormData();
+			formData.append('annotation_program', $('#annotation_program').val());
+			var annotation_databases = params = '';
+			$('input[type="checkbox"][name="database"]:checked').each(function () {
+				var $el = $(this);
+				annotation_databases += $el.val() + ',';
+				params += $el.data('param') + ',';
+			});
+			annotation_databases = annotation_databases.slice(0, -1); params = params.slice(0, -1);
+			formData.append('annotation_databases', annotation_databases);
+			formData.append('params', params);
+			formData.append('dossier', document.getElementById('vcf_file').files[0]);
+			$.ajax({
+				method: 'POST',
+				url: '/api/job/create/',
+				data: formData,
+				contentType: false,
+				processData: false,
+				beforeSend: function(xhr, settings) {
+					$('body').addClass('preload');
+					xhr.setRequestHeader("X-CSRFToken", csrftoken);
+				}
+			})
+			.done(function (d, textStatus, jqXHR) {
+				alert('Job created successfully. Id is ' + d);
+				location.href = '/job/' + d + '/filter/';
+			})
+			.fail(function (jqXHR, textStatus, errorThrown) {
+				if (jqXHR.status == 412) {
+					alert(jqXHR.responseJSON);
+				} else {
+					// console.log(jqXHR.responseText);
+					alert('Error');
+				}
+			})
+			.always(function() {
+				$('body').removeClass('preload'); // console.log("complete");
+			});
+			
+		});
+	</script>
+</body>
+</html>

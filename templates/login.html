@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Gnome App</title>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/jasny-bootstrap.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/web-app.css">
+</head>
+<body>
+	<div class="login-bg"></div>
+	<div class="app user-login">
+		<div class="container full-ht">
+			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-8 col-sm-offset-8 col-md-offset-8 col-lg-offset-8 full-ht">
+				<div class="login">
+					<div class="flex-box">
+						<div class="flex">
+							<div class="panel panel-default">
+								<div class="panel-heading">Login</div>
+								<div class="panel-body">
+									{% if next_url == '' %}
+									<form method="post" action="/login/" autocomplete="off">
+									{% else %}
+									<form method="post" action="/login/?next={{next_url}}" autocomplete="off">
+									{% endif %}
+										{% csrf_token %}
+										<div class="form-group">
+											<div class="input-group">
+												<span class="input-group-addon" id="userName"><span class="glyphicon glyphicon-user"></span></span>
+												<input type="text" class="form-control" name="email" id="email" placeholder="Username" aria-describedby="userName">
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="input-group">
+												<span class="input-group-addon" id="userName"><span class="glyphicon glyphicon-lock"></span></span>
+												<input type="password" class="form-control" id="password" placeholder="Password" aria-describedby="userName" name="password">
+											</div>
+										</div>
+										<span>{{err}}</span>
+										<button type="submit" class="btn btn-primary">Login</button>
+									</form>
+								</div>
+								<div class="panel-footer">Forgot Password?</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="{{STATIC_URL}}js/jquery-1.11.2.min.js"></script>
+	<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+	<script src="{{STATIC_URL}}js/jasny-bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Gnome App :: Refine</title>
+	<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap-select.css">
+	<link rel="stylesheet" href="{{STATIC_URL}}css/web-app.css">
+</head>
+<body>
+	{% csrf_token %}
+	<div class="loader">
+		<div class="flex-box">
+			<div class="flex text-center">
+				<i class="fa fa-cog fa-spin fa-3x"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="dna-bg"></div>
+
+	<div class="app">
+
+		<div class="upload-annotate-refine">
+			<div class="flex-box">
+				<div class="flex">
+					<div class="container">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<div class="panel panel-default">
+								<div class="panel-body refine">
+									<div class="results">
+										<div class="row offset-bottom-15">
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+												<div class="pull-left">
+													<button type="button" class="btn btn-primary" id="refine-data"><i class="fa fa-filter"></i>Refine Data</button>
+													<button type="button" class="btn btn-warning" id="clear-filters"><i class="fa fa-close"></i>Clear all filters</button>
+												</div>
+												<!-- <div class="pull-right">
+													<button type="button" class="btn btn-warning">Export</button>
+													<button type="button" class="btn btn-warning">Choose Headers</button>
+												</div> -->
+											</div>
+										</div>
+
+										<div class="filters">
+											<div class="panel panel-default auto-height">
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+															<div class="panel panel-default">
+																<div class="panel-body full-ht">
+																	<div class="row">
+																		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+																			<select name="" id="filter11" class="form-control selectpicker" title='Select one database' data-live-search="true">
+																				<option value="1000g2014oct_all">1000G2014OCT_ALL</option>
+																				<option value="1000g2014oct_afr">1000G2014OCT_AFR</option>
+																				<option value="1000g2014oct_eas">1000G2014OCT_EAS</option>
+																				<option value="1000g2014oct_eur">1000G2014OCT_EUR</option>
+																				<option value="esp6500siv2_all">ESP6500SIV2_ALL</option>
+																			</select>
+																		</div>
+																		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+																			<select name="" id="filter12" class="form-control selectpicker" title='Select'>
+																				<option value=">=">&gt;=</option>
+																				<option value="<=">&lt;=</option>
+																				<option value="=">=</option>
+																			</select>
+																		</div>
+																		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+																			<select name="" id="filter13" class="form-control selectpicker" title='0.0' data-live-search="true">
+																				<option value="0.0">0.00</option>
+																				<option value="0.01">0.01</option>
+																				<option value="0.02">0.02</option>
+																				<option value="0.03">0.03</option>
+																				<option value="0.04">0.04</option>
+																				<option value="0.05">0.05</option>
+																				<option value="0.06">0.06</option>
+																				<option value="0.07">0.07</option>
+																				<option value="0.08">0.08</option>
+																				<option value="0.09">0.09</option>
+																				<option value="0.10">0.10</option>
+																				<option value="0.11">0.11</option>
+																				<option value="0.12">0.12</option>
+																				<option value="0.13">0.13</option>
+																				<option value="0.14">0.14</option>
+																			</select>
+																		</div>
+																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 added-filter1">
+																			<ul class="list-inline" id="dbFilterPnl1">
+																			</ul>
+																		</div>
+																		<button type="button" class="btn btn-warning overflow-btn" id="add-another">Add Another</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+															<div class="panel panel-default">
+																<div class="panel-body">
+																	<div class="row offset-bottom-15">
+																		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+																			<div class="text-muted">CHR</div>
+																		</div>
+																		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+																			<input type="text" class="form-control" id="chr-count">
+																		</div>
+																	</div>
+																	<div class="row offset-bottom-15">
+																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																			<div class="row">
+																				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+																					<div class="text-muted">Start</div>
+																				</div>
+																				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+																					<select name="" id="chr-operator-start" class="form-control selectpicker" title='Select'>
+																						<option value=">=">&gt;=</option>
+																						<option value="<=">&lt;=</option>
+																						<option value="=">=</option>
+																					</select>
+																				</div>
+																				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+																					<input type="text" id="chr-start-count" class="form-control" value="">
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="row offset-bottom-15">
+																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																			<div class="row">
+																				<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+																					<div class="text-muted">End</div>
+																				</div>
+																				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+																					<select name="" id="chr-operator-end" class="form-control selectpicker" title='Select'>
+																						<option value=">=">&gt;=</option>
+																						<option value="<=">&lt;=</option>
+																						<option value="=">=</option>
+																					</select>
+																				</div>
+																				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+																					<input type="text" id="chr-end-count" class="form-control" value="">
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+																			<div class="text-muted">Gene</div>
+																		</div>
+																		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+																			<input type="text" class="form-control" id="gene">
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+															<div class="panel panel-default">
+																<div class="panel-body" id="func">
+																	<div class="row">
+																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																			<h5>Func</h5>
+																		</div>
+																		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="exonic">
+																					exonic
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="exonic;splicing">
+																					exonic;splicing
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="splicing">
+																					splicing
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="UTR3">
+																					UTR3
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="UTR5">
+																					UTR5
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="intronic">
+																					intronic
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="intergenic">
+																					intergenic
+																				</label>
+																			</div>
+																		</div>
+																		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="upstream">
+																					upstream
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="downstream">
+																					downstream
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="upstream;downstream">
+																					upstream;downstream
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="noRNA_exonic">
+																					noRNA_exonic
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="noRNA_intronic">
+																					noRNA_intronic
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="noRNA_UTR3">
+																					noRNA_UTR3
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-func" value="noRNA_UTR5">
+																					noRNA_UTR5
+																				</label>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+															<div class="panel panel-default">
+																<div class="panel-body" id="exonic-func">
+																	<div class="row">
+																		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+																			<h5>Exonic Func</h5>
+																		</div>
+																		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-exonic-func" value="frameshift insertion">
+																					frameshift insertion
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-exonic-func" value="frameshift deletion">
+																					frameshift deletion
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-exonic-func" value="nonframeshift insertion">
+																					nonframeshift insertion
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-exonic-func" value="nonframeshift deletion">
+																					nonframeshift deletion
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-exonic-func" value="nonsynonymous SNV">
+																					nonsynonymous SNV
+																				</label>
+																			</div>
+																		</div>
+																		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-exonic-func" value="synonymous SNV">
+																					synonymous SNV
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-exonic-func" value="stopgain SNV">
+																					stopgain SNV
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-exonic-func" value="stopless SNV">
+																					stopless SNV
+																				</label>
+																			</div>
+																			<div class="checkbox">
+																				<label>
+																					<input type="checkbox" name="chk-exonic-func" value="unknown">
+																					unknown
+																				</label>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+															<button type="button" class="btn btn-success" id="filter-results">Filter Results</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row active-filters" id="active-filters">
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+												<div class="panel panel-default">
+													<h5>Active Filters :</h5>
+													<div class="panel-body">
+														<ul class="list-inline filter-group1" id="dbFilterPnl2">
+														</ul>
+														<ul class="list-inline filter-group2">
+															<li></li>
+															<li></li>
+															<li></li>
+															<li></li>
+														</ul>
+														<ul class="list-inline filter-group3">
+														</ul>
+														<ul class="list-inline filter-group4">
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+												<div class="table-responsive" id="pnlGeneDifferences">
+													<table class="table table-striped table-bordered">
+														<thead>
+															<tr>
+																<th>Chr</th>
+																<th>Start</th>
+																<th>End</th>
+																<th>Ref</th>
+																<th>Alt</th>
+																<th>Func.refGene</th>
+																<th>Gene.refGene</th>
+																<th>GeneDetail.refGene</th>
+																<th>ExonicFunc.refGene</th>
+																<th>AAChange.refGene</th>
+																<th>cytoBand</th>
+																<th>genomicSuperDups</th>
+																<th>esp6500siv2_all</th>
+																<th>1000g2014oct_all</th>
+																<th>1000g2014oct_afr</th>
+																<th>1000g2014oct_eas</th>
+																<th>1000g2014oct_eur</th>
+																<th>snp138</th>
+																<th>SIFT_score</th>
+																<th>SIFT_pred</th>
+																<th>Polyphen2_HDIV_score</th>
+																<th>Polyphen2_HDIV_pred</th>
+																<th>Polyphen2_HVAR_score</th>
+																<th>Polyphen2_HVAR_pred</th>
+																<th>LRT_score</th>
+																<th>LRT_pred</th>
+																<th>MutationTaster_score</th>
+																<th>MutationTaster_pred</th>
+																<th>MutationAssessor_score</th>
+																<th>MutationAssessor_pred</th>
+																<th>FATHMM_score</th>
+																<th>FATHMM_pred</th>
+																<th>RadialSVM_score</th>
+																<th>RadialSVM_pred</th>
+																<th>LR_score</th>
+																<th>LR_pred</th>
+																<th>VEST3_score</th>
+																<th>CADD_raw</th>
+																<th>CADD_phred</th>
+																<th>GERP++_RS</th>
+																<th>phyloP46way_placental</th>
+																<th>phyloP100way_vertebrate</th>
+																<th>SiPhy_29way_logOdds</th>
+															</tr>
+														</thead>
+														<tbody data-bind="foreach: GeneDifferences">
+															<tr>
+																<td data-bind="text: $data['Chr']">1</td>
+																<td data-bind="text: $data['Start']">948921</td>
+																<td data-bind="text: $data['End']">948921</td>
+																<td data-bind="text: $data['Ref']">T</td>
+																<td data-bind="text: $data['Alt']">C</td>
+																<td data-bind="text: $data['Func.refGene']">UTR5</td>
+																<td data-bind="text: $data['Gene.refGene']">ISG15</td>
+																<td data-bind="text: $data['GeneDetail.refGene']">NM_005101:c.-33T&gt;C</td>
+																<td data-bind="text: $data['ExonicFunc.refGene']">.</td>
+																<td data-bind="text: $data['AAChange.refGene']">.</td>
+																<td data-bind="text: $data['cytoBand']">1p36.33</td>
+																<td data-bind="text: $data['genomicSuperDups']">.</td>
+																<td data-bind="text: $data['esp6500siv2_all']">0.8858</td>
+																<td data-bind="text: $data['1000g2014oct_all']">0.903155</td>
+																<td data-bind="text: $data['1000g2014oct_afr']">0.7201</td>
+																<td data-bind="text: $data['1000g2014oct_eas']">0.999</td>
+																<td data-bind="text: $data['1000g2014oct_eur']">0.9573</td>
+																<td data-bind="text: $data['snp138']">rs15842</td>
+																<td data-bind="text: $data['SIFT_score']">.</td>
+																<td data-bind="text: $data['SIFT_pred']">.</td>
+																<td data-bind="text: $data['Polyphen2_HDIV_score']">.</td>
+																<td data-bind="text: $data['Polyphen2_HDIV_pred']">.</td>
+																<td data-bind="text: $data['Polyphen2_HVAR_score']">.</td>
+																<td data-bind="text: $data['Polyphen2_HVAR_pred']">.</td>
+																<td data-bind="text: $data['LRT_score']">.</td>
+																<td data-bind="text: $data['LRT_pred']">.</td>
+																<td data-bind="text: $data['MutationTaster_score']">.</td>
+																<td data-bind="text: $data['MutationTaster_pred']">.</td>
+																<td data-bind="text: $data['MutationAssessor_score']">.</td>
+																<td data-bind="text: $data['MutationAssessor_pred']">.</td>
+																<td data-bind="text: $data['FATHMM_score']">.</td>
+																<td data-bind="text: $data['FATHMM_pred']">.</td>
+																<td data-bind="text: $data['RadialSVM_score']">.</td>
+																<td data-bind="text: $data['RadialSVM_pred']">.</td>
+																<td data-bind="text: $data['LR_score']">.</td>
+																<td data-bind="text: $data['LR_pred']">.</td>
+																<td data-bind="text: $data['VEST3_score']">.</td>
+																<td data-bind="text: $data['CADD_raw']">.</td>
+																<td data-bind="text: $data['CADD_phred']">.</td>
+																<td data-bind="text: $data['GERP_RS']">.</td>
+																<td data-bind="text: $data['phyloP46way_placental']">.</td>
+																<td data-bind="text: $data['phyloP100way_vertebrate']">.</td>
+																<td data-bind="text: $data['SiPhy_29way_logOdds']">.</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+
+										<!-- <div class="row">
+											<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+												<nav>
+													<ul class="pager">
+														<li class="previous"><a href="#">Previous</a></li>
+													</ul>
+												</nav>
+											</div>
+											<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 text-center">
+												<nav>
+													<ul class="pagination">
+														<li class="active">
+															<a href="#">1</a>
+														</li>
+														<li>
+															<a href="#">2</a>
+														</li>
+														<li>
+															<a href="#">3</a>
+														</li>
+														<li>
+															<a href="#">4</a>
+														</li>
+														<li>
+															<a href="#">5</a>
+														</li>
+														<li>
+															<a href="#">6</a>
+														</li>
+														<li>
+															<a href="#">7</a>
+														</li>
+														<li>
+															<a href="#">8</a>
+														</li>
+													</ul>
+												</nav>
+											</div>
+											<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+												<nav>
+													<ul class="pager">
+														<li class="next"><a href="#">Next</a></li>
+													</ul>
+												</nav>
+											</div>
+										</div> -->
+
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+												<a href="/" class="btn btn-warning upload-first">Upload Another VCF</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="{{STATIC_URL}}js/jquery-1.11.2.min.js"></script>
+	<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+	<script src="{{STATIC_URL}}js/bootstrap-select.js"></script>
+	<script src="{{STATIC_URL}}js/jquery.doubleScroll.js"></script>
+	<script src="{{STATIC_URL}}js/knockout-3.3.0.js"></script>
+	<script>
+		function getCookie(name) {
+			var cookieValue = null;
+			if (document.cookie && document.cookie != '') {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+					var cookie = jQuery.trim(cookies[i]);
+					// Does this cookie string begin with the name we want?
+					if (cookie.substring(0, name.length + 1) == (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		};
+		var csrftoken = getCookie('csrftoken');
+	</script>
+	<script src="{{STATIC_URL}}js/app.js"></script>
+</body>
+</html>

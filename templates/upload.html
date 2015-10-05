@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Gnome App</title>
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+  <link rel="stylesheet" href="assets/css/jasny-bootstrap.css">
+  <link rel="stylesheet" href="assets/css/bootstrap-select.css">
+  <link rel="stylesheet" href="assets/css/web-app.css">
+</head>
+<body>
+  <div class="loader">
+    <div class="flex-box">
+      <div class="flex text-center">
+        <i class="fa fa-cog fa-spin fa-3x"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="dna-bg"></div>
+
+  <div class="app">
+
+    <div class="upload-annotate-refine">
+      <div class="flex-box">
+        <div class="flex">
+          <div class="container">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs nav-justified" role="tablist">
+                      <li role="presentation" class="disabled">
+                        <a href="#upload" aria-controls="upload active" role="tab" data-toggle="tab">Upload
+                          <span>1</span>
+                        </a>
+                      </li>
+                      <li role="presentation" class="disabled">
+                        <a href="#annotate" aria-controls="annotate" role="tab" data-toggle="tab">Annotate
+                          <span>2</span>
+                        </a>
+                      </li>
+                      <li role="presentation" class="disabled">
+                        <a href="#refine" aria-controls="refine" role="tab" data-toggle="tab">Refine
+                          <span>3</span>
+                        </a>
+                      </li>
+                    </ul>
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                      </div>
+                    </div>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                      <div role="tabpanel" class="tab-pane upload active" id="upload">
+                        <form action="" method="POST" role="form">
+                          <legend class="text-center">Upload VCF</legend>
+                        
+                          <div class="form-group">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                              <div class="form-control" data-trigger="fileinput"><i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span></div>
+                              <span class="input-group-addon btn btn-default btn-file"><span class="fileinput-new">Select file</span><span class="fileinput-exists">Change</span><input type="file" name="..."></span>
+                              <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                            </div>
+                          </div>
+                          <div class="form-group text-center">
+                            <a href="#annotate" aria-controls="upload" role="tab" data-toggle="tab" class="btn btn-primary">Upload &amp; Proceed</a>
+                          </div>
+                          
+                        </form>
+                      </div>
+                      <div role="tabpanel" class="tab-pane annotate" id="annotate">
+                        <form action="" method="POST" role="form">
+                          <legend class="text-center">Select a tool to Annotate</legend>
+                        
+                          <div class="form-group">
+                            <div class="row">
+                              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                                <div class="btn-group btn-group-lg" role="group" aria-label="...">
+                                  <a class="btn btn-primary" id="select-db-modal-trigger">Annovar</a>
+                                  <a href="#" class="btn btn-primary disabled">Bioconductor</a>
+                                </div>
+                              </div>
+                              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+                                <div class="btn-group btn-group-lg" role="group" aria-label="...">
+                                  <a href="#" class="btn btn-primary disabled">Annotation2</a>
+                                  <a href="#" class="btn btn-primary disabled">Annotation3</a>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="form-group">
+                            <a href="#upload" aria-controls="upload" role="tab" data-toggle="tab" class="btn btn-primary pull-left prev" id="annotate-prev">Prev</a>
+                            <a href="#refine" aria-controls="upload" role="tab" data-toggle="tab" class="btn btn-primary pull-right next disabled" id="annotate-proceed">Proceed</a>
+                          </div>
+                          
+                        </form>
+                      </div>
+                      <div role="tabpanel" class="tab-pane refine" id="refine">
+
+                        <div class="console">
+                          <div class="terminal-wrapper">
+                            <div id="terminal" class="terminal"></div>
+                          </div>
+                          <div class="text-right">
+                            <button type="button" class="btn btn-primary" id="show-results">Proceed</button>
+                          </div>
+                        </div>
+
+                        <div class="results">
+
+                          <div class="row offset-bottom-15">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="pull-left">
+                                <button type="button" class="btn btn-primary" id="refine-data"><i class="fa fa-filter"></i>Refine Data</button>
+                                <button type="button" class="btn btn-warning" id="clear-filters"><i class="fa fa-close"></i>Clear all filters</button>
+                              </div>
+                              <div class="pull-right">
+                                <button type="button" class="btn btn-warning">Export</button>
+                                <button type="button" class="btn btn-warning">Choose Headers</button>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="filters">
+
+                            <div class="panel panel-default auto-height">
+                              <div class="panel-body">
+                                <div class="row">
+                                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="panel panel-default">
+                                      <div class="panel-body full-ht">
+                                        <div class="row">
+
+                                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <select name="" id="filter11" class="form-control selectpicker" title='Select one database' data-live-search="true">
+                                              <option value="1000G_ALL">1000G_ALL</option>
+                                              <option value="1000G_AFR">1000G_AFR</option>
+                                              <option value="1000G_EUR">1000G_EUR</option>
+                                              <option value="1000G_EAS">1000G_EAS</option>
+                                              <option value="ESP6500SIV2_ALL">ESP6500SIV2_ALL</option>
+                                            </select>
+                                          </div>
+                                          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                            <select name="" id="filter12" class="form-control selectpicker" title='Select'>
+                                              <option value=">=">&gt;=</option>
+                                              <option value="<=">&lt;=</option>
+                                              <option value="=">=</option>
+                                            </select>
+                                          </div>
+                                          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                            <select name="" id="filter13" class="form-control selectpicker" title='0.00' data-live-search="true">
+                                              <option value="0.00">0.00</option>
+                                              <option value="0.01">0.01</option>
+                                              <option value="0.02">0.02</option>
+                                              <option value="0.03">0.03</option>
+                                              <option value="0.04">0.04</option>
+                                              <option value="0.05">0.05</option>
+                                              <option value="0.06">0.06</option>
+                                              <option value="0.07">0.07</option>
+                                              <option value="0.08">0.08</option>
+                                              <option value="0.09">0.09</option>
+                                              <option value="0.10">0.10</option>
+                                              <option value="0.11">0.11</option>
+                                              <option value="0.12">0.12</option>
+                                              <option value="0.13">0.13</option>
+                                              <option value="0.14">0.14</option>
+                                            </select>
+                                          </div>
+                                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 added-filter1">
+                                            <ul class="list-inline" id="dbFilterPnl1">
+
+                                            </ul>
+                                          </div>
+                                          <button type="button" class="btn btn-warning overflow-btn" id="add-another">Add Another</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="panel panel-default">
+                                      <div class="panel-body">
+                                        <div class="row offset-bottom-15">
+                                          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                            <div class="text-muted">CHR</div>
+                                          </div>
+                                          <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                            <input type="text" class="form-control" id="chr-count">
+                                          </div>
+                                        </div>
+                                        <div class="row offset-bottom-15">
+                                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="row">
+                                              <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                                <div class="text-muted">Start</div>
+                                              </div>
+                                              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                <select name="" id="chr-operator-start" class="form-control selectpicker" title='Select'>
+                                                  <option value=">=">&gt;=</option>
+                                                  <option value="<=">&lt;=</option>
+                                                  <option value="=">=</option>
+                                                </select>
+                                              </div>
+                                              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                <input type="text" id="chr-start-count" class="form-control" value="">
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="row offset-bottom-15">
+                                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="row">
+                                              <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                                <div class="text-muted">End</div>
+                                              </div>
+                                              <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                                <select name="" id="chr-operator-end" class="form-control selectpicker" title='Select'>
+                                                  <option value=">=">&gt;=</option>
+                                                  <option value="<=">&lt;=</option>
+                                                  <option value="=">=</option>
+                                                </select>
+                                              </div>
+                                              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                                <input type="text" id="chr-end-count" class="form-control" value="">
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="row">
+                                          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                            <div class="text-muted">Gene</div>
+                                          </div>
+                                          <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                            <input type="text" class="form-control" id="gene">
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="panel panel-default">
+                                      <div class="panel-body" id="func">
+                                        <div class="row">
+                                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <h5>Func</h5>
+                                          </div>
+                                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="exonic">
+                                                exonic
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="exonic;splicing">
+                                                exonic;splicing
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="splicing">
+                                                splicing
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="UTR3">
+                                                UTR3
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="UTR5">
+                                                UTR5
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="intronic">
+                                                intronic
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="intergenic">
+                                                intergenic
+                                              </label>
+                                            </div>
+                                          </div>
+                                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="upstream">
+                                                upstream
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="downstream">
+                                                downstream
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="upstream;downstream">
+                                                upstream;downstream
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="noRNA_exonic">
+                                                noRNA_exonic
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="noRNA_intronic">
+                                                noRNA_intronic
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="noRNA_UTR3">
+                                                noRNA_UTR3
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-func" value="noRNA_UTR5">
+                                                noRNA_UTR5
+                                              </label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="panel panel-default">
+                                      <div class="panel-body" id="exonic-func">
+                                        <div class="row">
+                                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <h5>Exonic Func</h5>
+                                          </div>
+                                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-exonic-func" value="frameshift insertion">
+                                                frameshift insertion
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-exonic-func" value="frameshift deletion">
+                                                frameshift deletion
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-exonic-func" value="nonframeshift insertion">
+                                                nonframeshift insertion
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-exonic-func" value="nonframeshift deletion">
+                                                nonframeshift deletion
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-exonic-func" value="nonsynonymous SNV">
+                                                nonsynonymous SNV
+                                              </label>
+                                            </div>
+                                          </div>
+                                          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-exonic-func" value="synonymous SNV">
+                                                synonymous SNV
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-exonic-func" value="stopgain SNV">
+                                                stopgain SNV
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-exonic-func" value="stopless SNV">
+                                                stopless SNV
+                                              </label>
+                                            </div>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input type="checkbox" name="chk-exonic-func" value="unknown">
+                                                unknown
+                                              </label>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <button type="button" class="btn btn-success" id="filter-results">Filter Results</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row active-filters" id="active-filters">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="panel panel-default">
+                                <h5>Active Filters :</h5>
+                                <div class="panel-body">
+                                  <ul class="list-inline filter-group1" id="dbFilterPnl2">
+
+                                  </ul>
+                                  <ul class="list-inline filter-group2">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                  </ul>
+                                  <ul class="list-inline filter-group3">
+                                  </ul>
+                                  <ul class="list-inline filter-group4">
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                              <div class="table-responsive" id="pnlGeneDifferences">
+
+                                <table class="table table-striped table-bordered">
+                                  <thead>
+                                    <tr>
+                                      <th>Chr</th>
+                                      <th>Start</th>
+                                      <th>End</th>
+                                      <th>Ref</th>
+                                      <th>Alt</th>
+                                      <th>Func.refGene</th>
+                                      <th>Gene.refGene</th>
+                                      <th>GeneDetail.refGene</th>
+                                      <th>ExonicFunc.refGene</th>
+                                      <th>AAChange.refGene</th>
+                                      <th>cytoBand</th>
+                                      <th>genomicSuperDups</th>
+                                      <th>esp6500siv2_all</th>
+                                      <th>1000g2014oct_all</th>
+                                      <th>1000g2014oct_afr</th>
+                                      <th>1000g2014oct_eas</th>
+                                      <th>1000g2014oct_eur</th>
+                                      <th>snp138</th>
+                                      <th>SIFT_score</th>
+                                      <th>SIFT_pred</th>
+                                      <th>Polyphen2_HDIV_score</th>
+                                      <th>Polyphen2_HDIV_pred</th>
+                                      <th>Polyphen2_HVAR_score</th>
+                                      <th>Polyphen2_HVAR_pred</th>
+                                      <th>LRT_score</th>
+                                      <th>LRT_pred</th>
+                                      <th>MutationTaster_score</th>
+                                      <th>MutationTaster_pred</th>
+                                      <th>MutationAssessor_score</th>
+                                      <th>MutationAssessor_pred</th>
+                                      <th>FATHMM_score</th>
+                                      <th>FATHMM_pred</th>
+                                      <th>RadialSVM_score</th>
+                                      <th>RadialSVM_pred</th>
+                                      <th>LR_score</th>
+                                      <th>LR_pred</th>
+                                      <th>VEST3_score</th>
+                                      <th>CADD_raw</th>
+                                      <th>CADD_phred</th>
+                                      <th>GERP++_RS</th>
+                                      <th>phyloP46way_placental</th>
+                                      <th>phyloP100way_vertebrate</th>
+                                      <th>SiPhy_29way_logOdds</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody data-bind="foreach: GeneDifferences">
+                                    <tr>
+                                      <td data-bind="text: $data['Chr']">1</td>
+                                      <td data-bind="text: $data['Start']">948921</td>
+                                      <td data-bind="text: $data['End']">948921</td>
+                                      <td data-bind="text: $data['Ref']">T</td>
+                                      <td data-bind="text: $data['Alt']">C</td>
+                                      <td data-bind="text: $data['Func.refGene']">UTR5</td>
+                                      <td data-bind="text: $data['Gene.refGene']">ISG15</td>
+                                      <td data-bind="text: $data['GeneDetail.refGene']">NM_005101:c.-33T&gt;C</td>
+                                      <td data-bind="text: $data['ExonicFunc.refGene']">.</td>
+                                      <td data-bind="text: $data['AAChange.refGene']">.</td>
+                                      <td data-bind="text: $data['cytoBand']">1p36.33</td>
+                                      <td data-bind="text: $data['genomicSuperDups']">.</td>
+                                      <td data-bind="text: $data['esp6500siv2_all']">0.8858</td>
+                                      <td data-bind="text: $data['1000g2014oct_all']">0.903155</td>
+                                      <td data-bind="text: $data['1000g2014oct_afr']">0.7201</td>
+                                      <td data-bind="text: $data['1000g2014oct_eas']">0.999</td>
+                                      <td data-bind="text: $data['1000g2014oct_eur']">0.9573</td>
+                                      <td data-bind="text: $data['snp138']">rs15842</td>
+                                      <td data-bind="text: $data['SIFT_score']">.</td>
+                                      <td data-bind="text: $data['SIFT_pred']">.</td>
+                                      <td data-bind="text: $data['Polyphen2_HDIV_score']">.</td>
+                                      <td data-bind="text: $data['Polyphen2_HDIV_pred']">.</td>
+                                      <td data-bind="text: $data['Polyphen2_HVAR_score']">.</td>
+                                      <td data-bind="text: $data['Polyphen2_HVAR_pred']">.</td>
+                                      <td data-bind="text: $data['LRT_score']">.</td>
+                                      <td data-bind="text: $data['LRT_pred']">.</td>
+                                      <td data-bind="text: $data['MutationTaster_score']">.</td>
+                                      <td data-bind="text: $data['MutationTaster_pred']">.</td>
+                                      <td data-bind="text: $data['MutationAssessor_score']">.</td>
+                                      <td data-bind="text: $data['MutationAssessor_pred']">.</td>
+                                      <td data-bind="text: $data['FATHMM_score']">.</td>
+                                      <td data-bind="text: $data['FATHMM_pred']">.</td>
+                                      <td data-bind="text: $data['RadialSVM_score']">.</td>
+                                      <td data-bind="text: $data['RadialSVM_pred']">.</td>
+                                      <td data-bind="text: $data['LR_score']">.</td>
+                                      <td data-bind="text: $data['LR_pred']">.</td>
+                                      <td data-bind="text: $data['VEST3_score']">.</td>
+                                      <td data-bind="text: $data['CADD_raw']">.</td>
+                                      <td data-bind="text: $data['CADD_phred']">.</td>
+                                      <td data-bind="text: $data['GERP_RS']">.</td>
+                                      <td data-bind="text: $data['phyloP46way_placental']">.</td>
+                                      <td data-bind="text: $data['phyloP100way_vertebrate']">.</td>
+                                      <td data-bind="text: $data['SiPhy_29way_logOdds']">.</td>
+                                    </tr>
+                                    <!-- <tr>
+                                      <td>1</td>
+                                      <td>1404001</td>
+                                      <td>1404001</td>
+                                      <td>G</td>
+                                      <td>T</td>
+                                      <td>UTR3</td>
+                                      <td>ATAD3C</td>
+                                      <td>NM_001039211:c.*91G&gt;T</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>1p36.33</td>
+                                      <td>Score=0.905283;Name=chr1:1439902</td>
+                                      <td>0.0279</td>
+                                      <td>0.0676917</td>
+                                      <td>0.031</td>
+                                      <td>0.126</td>
+                                      <td>0.0388</td>
+                                      <td>rs149123833</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                    </tr>
+                                    <tr>
+                                      <td>1</td>
+                                      <td>5935162</td>
+                                      <td>5935162</td>
+                                      <td>A</td>
+                                      <td>T</td>
+                                      <td>splicing</td>
+                                      <td>NPHP4</td>
+                                      <td>NM_001291593:exon19:c.1279-2T&gt;A,NM_001291594:exon18:c.1282-2T&gt;A,NM_015102:exon22:c.2818-2T&gt;A</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>1p36.31</td>
+                                      <td>.</td>
+                                      <td>0.8431</td>
+                                      <td>0.843251</td>
+                                      <td>0.91</td>
+                                      <td>0.7907</td>
+                                      <td>0.8111</td>
+                                      <td>rs1287637</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>0</td>
+                                      <td>P</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>0.905</td>
+                                      <td>8.681</td>
+                                      <td>4.93</td>
+                                      <td>0.745</td>
+                                      <td>0.452</td>
+                                      <td>6.573</td>
+                                    </tr>
+                                    <tr>
+                                      <td>1</td>
+                                      <td>162736463</td>
+                                      <td>162736463</td>
+                                      <td>C</td>
+                                      <td>T</td>
+                                      <td>intronic</td>
+                                      <td>DDR2</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>1q23.3</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>0.620607</td>
+                                      <td>0.385</td>
+                                      <td>0.5923</td>
+                                      <td>0.8529</td>
+                                      <td>rs1000050</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                    </tr>
+                                    <tr>
+                                      <td>1</td>
+                                      <td>84875173</td>
+                                      <td>84875173</td>
+                                      <td>C</td>
+                                      <td>T</td>
+                                      <td>intronic</td>
+                                      <td>DNASE2B</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>1p31.1</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>0.548922</td>
+                                      <td>0.5303</td>
+                                      <td>0.6062</td>
+                                      <td>0.5239</td>
+                                      <td>rs6576700</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                    </tr>
+                                    <tr>
+                                      <td>1</td>
+                                      <td>13211293</td>
+                                      <td>13211294</td>
+                                      <td>TC</td>
+                                      <td>-</td>
+                                      <td>intergenic</td>
+                                      <td>LOC645354,LOC391003</td>
+                                      <td>dist=11566;dist=116902</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>1p36.21</td>
+                                      <td>Score=0.99612;Name=chr1:13142561</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                    </tr>
+                                    <tr>
+                                      <td>1</td>
+                                      <td>11403596</td>
+                                      <td>11403596</td>
+                                      <td>-</td>
+                                      <td>AT</td>
+                                      <td>intergenic</td>
+                                      <td>UBIAD1,PTCHD2</td>
+                                      <td>dist=55105;dist=135699</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>1p36.22</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>rs35561142</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                    </tr>
+                                    <tr>
+                                      <td>1</td>
+                                      <td>105492231</td>
+                                      <td>105492231</td>
+                                      <td>A</td>
+                                      <td>ATAAA</td>
+                                      <td>intergenic</td>
+                                      <td>LOC100129138,LOC101928476</td>
+                                      <td>dist=872538;dist=640085</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>1p21.1</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                    </tr>
+                                    <tr>
+                                      <td>1</td>
+                                      <td>67705958</td>
+                                      <td>67705958</td>
+                                      <td>G</td>
+                                      <td>A</td>
+                                      <td>exonic</td>
+                                      <td>IL23R</td>
+                                      <td>.</td>
+                                      <td>nonsynonymous SNV</td>
+                                      <td>IL23R:NM_144701:exon9:c.G1142A:p.R381Q</td>
+                                      <td>1p31.3</td>
+                                      <td>.</td>
+                                      <td>0.0469</td>
+                                      <td>0.0227636</td>
+                                      <td>0.003</td>
+                                      <td>.</td>
+                                      <td>0.0616</td>
+                                      <td>rs11209026</td>
+                                      <td>0.1</td>
+                                      <td>T</td>
+                                      <td>1</td>
+                                      <td>D</td>
+                                      <td>0.999</td>
+                                      <td>D</td>
+                                      <td>0</td>
+                                      <td>D</td>
+                                      <td>1</td>
+                                      <td>D</td>
+                                      <td>1.935</td>
+                                      <td>M</td>
+                                      <td>0.71</td>
+                                      <td>T</td>
+                                      <td>-0.599</td>
+                                      <td>T</td>
+                                      <td>0.275</td>
+                                      <td>T</td>
+                                      <td>0.655</td>
+                                      <td>4.183</td>
+                                      <td>21.7</td>
+                                      <td>5.19</td>
+                                      <td>2.865</td>
+                                      <td>2.716</td>
+                                      <td>14.412</td>
+                                    </tr>
+                                    <tr>
+                                      <td>2</td>
+                                      <td>234183368</td>
+                                      <td>234183368</td>
+                                      <td>A</td>
+                                      <td>G</td>
+                                      <td>exonic</td>
+                                      <td>ATG16L1</td>
+                                      <td>.</td>
+                                      <td>nonsynonymous SNV</td>
+                                      <td>ATG16L1:NM_198890:exon5:c.A409G:p.T137A,ATG16L1:NM_017974:exon8:c.A841G:p.T281A,ATG16L1:NM_001190266:exon9:c.A646G:p.T216A,ATG16L1:NM_001190267:exon9:c.A550G:p.T184A,ATG16L1:NM_030803:exon9:c.A898G:p.T300A</td>
+                                      <td>2q37.1</td>
+                                      <td>.</td>
+                                      <td>0.4563</td>
+                                      <td>0.395966</td>
+                                      <td>0.3101</td>
+                                      <td>0.3224</td>
+                                      <td>0.5368</td>
+                                      <td>rs2241880</td>
+                                      <td>0.57</td>
+                                      <td>T</td>
+                                      <td>0.001</td>
+                                      <td>B</td>
+                                      <td>0.005</td>
+                                      <td>B</td>
+                                      <td>0.07</td>
+                                      <td>N</td>
+                                      <td>0.998</td>
+                                      <td>P</td>
+                                      <td>-0.255</td>
+                                      <td>N</td>
+                                      <td>1.71</td>
+                                      <td>T</td>
+                                      <td>-1.007</td>
+                                      <td>T</td>
+                                      <td>0</td>
+                                      <td>T</td>
+                                      <td>0.192</td>
+                                      <td>1.505</td>
+                                      <td>10.98</td>
+                                      <td>-11.4</td>
+                                      <td>-1.999</td>
+                                      <td>-0.395</td>
+                                      <td>12.66</td>
+                                    </tr>
+                                    <tr>
+                                      <td>16</td>
+                                      <td>50745926</td>
+                                      <td>50745926</td>
+                                      <td>C</td>
+                                      <td>T</td>
+                                      <td>exonic</td>
+                                      <td>NOD2</td>
+                                      <td>.</td>
+                                      <td>nonsynonymous SNV</td>
+                                      <td>NOD2:NM_001293557:exon3:c.C2023T:p.R675W,NOD2:NM_022162:exon4:c.C2104T:p.R702W</td>
+                                      <td>16q12.1</td>
+                                      <td>.</td>
+                                      <td>0.0316</td>
+                                      <td>0.014377</td>
+                                      <td>0.0023</td>
+                                      <td>.</td>
+                                      <td>0.0507</td>
+                                      <td>rs2066844</td>
+                                      <td>0.01</td>
+                                      <td>D</td>
+                                      <td>0.999</td>
+                                      <td>D</td>
+                                      <td>0.901</td>
+                                      <td>P</td>
+                                      <td>0.993</td>
+                                      <td>N</td>
+                                      <td>1</td>
+                                      <td>N</td>
+                                      <td>2.32</td>
+                                      <td>M</td>
+                                      <td>-0.62</td>
+                                      <td>T</td>
+                                      <td>-0.855</td>
+                                      <td>T</td>
+                                      <td>0.138</td>
+                                      <td>T</td>
+                                      <td>0.219</td>
+                                      <td>3.578</td>
+                                      <td>18.23</td>
+                                      <td>3.66</td>
+                                      <td>1.421</td>
+                                      <td>0.5</td>
+                                      <td>6.914</td>
+                                    </tr>
+                                    <tr>
+                                      <td>16</td>
+                                      <td>50756540</td>
+                                      <td>50756540</td>
+                                      <td>G</td>
+                                      <td>C</td>
+                                      <td>exonic</td>
+                                      <td>NOD2</td>
+                                      <td>.</td>
+                                      <td>nonsynonymous SNV</td>
+                                      <td>NOD2:NM_001293557:exon7:c.G2641C:p.G881R,NOD2:NM_022162:exon8:c.G2722C:p.G908R</td>
+                                      <td>16q12.1</td>
+                                      <td>.</td>
+                                      <td>0.0102</td>
+                                      <td>0.00459265</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>0.0099</td>
+                                      <td>rs2066845</td>
+                                      <td>0.02</td>
+                                      <td>D</td>
+                                      <td>1</td>
+                                      <td>D</td>
+                                      <td>0.986</td>
+                                      <td>D</td>
+                                      <td>0</td>
+                                      <td>D</td>
+                                      <td>1</td>
+                                      <td>D</td>
+                                      <td>1.79</td>
+                                      <td>L</td>
+                                      <td>0.57</td>
+                                      <td>T</td>
+                                      <td>-0.696</td>
+                                      <td>T</td>
+                                      <td>0.138</td>
+                                      <td>T</td>
+                                      <td>0.94</td>
+                                      <td>4.373</td>
+                                      <td>23.1</td>
+                                      <td>5.91</td>
+                                      <td>2.813</td>
+                                      <td>5.363</td>
+                                      <td>15.796</td>
+                                    </tr>
+                                    <tr>
+                                      <td>16</td>
+                                      <td>50763778</td>
+                                      <td>50763778</td>
+                                      <td>-</td>
+                                      <td>C</td>
+                                      <td>exonic</td>
+                                      <td>NOD2</td>
+                                      <td>.</td>
+                                      <td>frameshift insertion</td>
+                                      <td>NOD2:NM_001293557:exon10:c.2936dupC:p.A979fs,NOD2:NM_022162:exon11:c.3017dupC:p.A1006fs</td>
+                                      <td>16q12.1</td>
+                                      <td>.</td>
+                                      <td>0.0162</td>
+                                      <td>0.00599042</td>
+                                      <td>0.0038</td>
+                                      <td>.</td>
+                                      <td>0.0139</td>
+                                      <td>rs2066847</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                    </tr>
+                                    <tr>
+                                      <td>13</td>
+                                      <td>20763686</td>
+                                      <td>20763686</td>
+                                      <td>G</td>
+                                      <td>-</td>
+                                      <td>exonic</td>
+                                      <td>GJB2</td>
+                                      <td>.</td>
+                                      <td>frameshift deletion</td>
+                                      <td>GJB2:NM_004004:exon2:c.35delG:p.G12fs</td>
+                                      <td>13q12.11</td>
+                                      <td>.</td>
+                                      <td>0.0074</td>
+                                      <td>0.00239617</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>0.0089</td>
+                                      <td>rs80338939</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                    </tr>
+                                    <tr>
+                                      <td>13</td>
+                                      <td>20797176</td>
+                                      <td>21105944</td>
+                                      <td>0</td>
+                                      <td>-</td>
+                                      <td>exonic</td>
+                                      <td>CRYL1,GJB6</td>
+                                      <td>.</td>
+                                      <td>frameshift deletion</td>
+                                      <td>GJB6:NM_001110221:wholegene,GJB6:NM_006783:wholegene,GJB6:NM_001110219:wholegene,GJB6:NM_001110220:wholegene,CRYL1:NM_015974:wholegene</td>
+                                      <td>13q12.11</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                      <td>.</td>
+                                    </tr> -->
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                              <nav>
+                                <ul class="pager">
+                                  <li class="previous"><a href="#">Previous</a></li>
+                                </ul>
+                              </nav>
+                            </div>
+                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 text-center">
+                              <nav>
+                                <ul class="pagination">
+                                  <li class="active">
+                                    <a href="#">1</a>
+                                  </li>
+                                  <li>
+                                    <a href="#">2</a>
+                                  </li>
+                                  <li>
+                                    <a href="#">3</a>
+                                  </li>
+                                  <li>
+                                    <a href="#">4</a>
+                                  </li>
+                                  <li>
+                                    <a href="#">5</a>
+                                  </li>
+                                  <li>
+                                    <a href="#">6</a>
+                                  </li>
+                                  <li>
+                                    <a href="#">7</a>
+                                  </li>
+                                  <li>
+                                    <a href="#">8</a>
+                                  </li>
+                                </ul>
+                              </nav>
+                            </div>
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                              <nav>
+                                <ul class="pager">
+                                  <li class="next"><a href="#">Next</a></li>
+                                </ul>
+                              </nav>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                              <a href="#upload" aria-controls="upload" role="tab" data-toggle="tab" class="btn btn-warning upload-first">Upload Another VCF</a>
+                            </div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="select-database-modal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Select Database</h4>
+            </div>
+            <div class="modal-body">
+
+              <div role="tabpanel">
+                  <div class="tab-content">
+                      <div role="tabpanel" class="tab-pane active" id="annovar-db-list">
+                        <div class="row">
+                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" id="refGene" value="refGene"> refGene
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="checkbox">
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="cytoBand" value="cytoBand"> cytoBand
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="checkbox">
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="genomicSuperDups" value="genomicSuperDups"> genomicSuperDups
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="checkbox">
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="1000g2014oct_all" value="1000g2014oct_all"> 1000g2014oct_all
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="checkbox">
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="1000g2014oct_afr" value="1000g2014oct_afr"> 1000g2014oct_afr
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="checkbox">
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="1000g2014oct_eas" value="1000g2014oct_eas"> 1000g2014oct_eas
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="checkbox">
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="1000g2014oct_eur" value="1000g2014oct_eur"> 1000g2014oct_eur
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="checkbox">
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="snp138" value="snp138"> snp138
+                              </label>
+                            </div>
+                          </div>
+                          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="checkbox">
+                              <label class="checkbox-inline">
+                                <input type="checkbox" id="ljb26_all" value="ljb26_all"> ljb26_all
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div role="tabpanel" class="tab-pane text-center" id="create-batch-job-tab">
+                        <button type="button" class="btn btn-primary" id="create-batch-job">Create Batch Job</button>
+                      </div>
+                  </div>
+              </div>    
+
+            </div>
+            <div class="modal-footer">
+            <a href="#create-batch-job-tab" aria-controls="create-batch-job-tab" role="tab" data-toggle="tab" class="btn btn-primary" id="select-db-modal-proceed">Proceed</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="prepare-for-search-modal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+
+            <div role="tabpanel">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active text-center" id="prepare-search-tab">
+                      <a href="#build-queries-tab" aria-controls="build-queries-tab" role="tab" data-toggle="tab" class="btn btn-primary" id="prepare-for-search">Prepare for search</a>
+                    </div>
+                    <div role="tabpanel" class="tab-pane text-center" id="build-queries-tab">
+                      <a href="#check-build-tab" aria-controls="check-build-tab" role="tab" data-toggle="tab" class="btn btn-primary" id="build-queries">Build queries</a>
+                    </div>
+                    <div role="tabpanel" class="tab-pane text-center" id="check-build-tab">
+                      <a href="#" class="btn btn-primary" id="check-build">Check build</a>
+                    </div>
+                </div>
+            </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  
+  <script src="assets/js/jquery-1.11.2.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/jasny-bootstrap.min.js"></script>
+  <script src="assets/js/jquery.typist.js"></script>
+  <script src="assets/js/bootstrap-select.js"></script>
+  <script src="assets/js/jquery.doubleScroll.js"></script>
+  <script src="assets/js/knockout-3.3.0.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
