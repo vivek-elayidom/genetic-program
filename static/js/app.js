@@ -405,19 +405,85 @@ $(function () {
 		self['End'] = x['End'][0] || '';
 		self['Ref'] = x['Ref'][0] || '';
 		self['Alt'] = x['Alt'][0] || '';
-		self['Func.refGene'] = x['Func.refGene'][0] || '';
-		self['Gene.refGene'] = x['Gene.refGene'][0] || '';
-		self['GeneDetail.refGene'] = x['GeneDetail.refGene'][0] || '';
-		self['ExonicFunc.refGene'] = x['ExonicFunc.refGene'][0] || '';
-		self['AAChange.refGene'] = x['AAChange.refGene'][0] || '';
-		self['cytoBand'] = x['cytoBand'][0] || '';
-		self['genomicSuperDups'] = x['genomicSuperDups'][0] || '';
-		self['esp6500siv2_all'] = x['esp6500siv2_all'][0] || '';
-		self['1000g2014oct_all'] = x['1000g2014oct_all'][0] || '';
-		self['1000g2014oct_afr'] = x['1000g2014oct_afr'][0] || '';
-		self['1000g2014oct_eas'] = x['1000g2014oct_eas'][0] || '';
-		self['1000g2014oct_eur'] = x['1000g2014oct_eur'][0] || '';
-		self['snp138'] = x['snp138'][0] || '';
+		
+		if (x['Func.refGene'] != undefined) {
+			self['Func.refGene'] = x['Func.refGene'][0] || '';
+		} else {
+			self['Func.refGene'] = '';
+		}
+
+		if (x['Gene.refGene'] != undefined) {
+			self['Gene.refGene'] = x['Gene.refGene'][0] || '';
+		} else {
+			self['Gene.refGene'] = '';
+		}
+
+		if (x['GeneDetail.refGene'] != undefined) {
+			self['GeneDetail.refGene'] = x['GeneDetail.refGene'][0] || '';
+		} else {
+			self['GeneDetail.refGene'] = '';
+		}
+
+		if (x['ExonicFunc.refGene'] != undefined) {
+			self['ExonicFunc.refGene'] = x['ExonicFunc.refGene'][0] || '';
+		} else {
+			self['ExonicFunc.refGene'] = '';
+		}
+
+		if (x['AAChange.refGene'] != undefined) {
+			self['AAChange.refGene'] = x['AAChange.refGene'][0] || '';
+		} else {
+			self['AAChange.refGene'] = '';
+		}
+
+		if (x['cytoBand'] != undefined) {
+			self['cytoBand'] = x['cytoBand'][0] || '';
+		} else {
+			self['cytoBand'] = '';
+		}
+
+		if (x['genomicSuperDups'] != undefined) {
+			self['genomicSuperDups'] = x['genomicSuperDups'][0] || '';
+		} else {
+			self['genomicSuperDups'] = '';
+		}
+
+		if (x['esp6500siv2_all'] != undefined) {
+			self['esp6500siv2_all'] = x['esp6500siv2_all'][0] || '';
+		} else {
+			self['esp6500siv2_all'] = '';
+		}
+
+		if (x['1000g2014oct_all'] != undefined) {
+			self['1000g2014oct_all'] = x['1000g2014oct_all'][0] || '';
+		} else {
+			self['1000g2014oct_all'] = '';
+		}
+
+		if (x['1000g2014oct_afr'] != undefined) {
+			self['1000g2014oct_afr'] = x['1000g2014oct_afr'][0] || '';
+		} else {
+			self['1000g2014oct_afr'] = '';
+		}
+
+		if (x['1000g2014oct_eas'] != undefined) {
+			self['1000g2014oct_eas'] = x['1000g2014oct_eas'][0] || '';
+		} else {
+			self['1000g2014oct_eas'] = '';
+		}
+
+		if (x['1000g2014oct_eur'] != undefined) {
+			self['1000g2014oct_eur'] = x['1000g2014oct_eur'][0] || '';
+		} else {
+			self['1000g2014oct_eur'] = '';
+		}
+
+		if (x['snp138'] != undefined) {
+			self['snp138'] = x['snp138'][0] || '';
+		} else {
+			self['snp138'] = '';
+		}
+
 
 		if (x['SIFT_score'] != undefined) {
 			self['SIFT_score'] = x['SIFT_score'][0] || '';
